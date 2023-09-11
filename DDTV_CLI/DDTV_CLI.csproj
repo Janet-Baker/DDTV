@@ -9,6 +9,7 @@
     <Description>这是DDTV的CLI版本</Description>
     <ApplicationIcon>DDTV.ico</ApplicationIcon>
     <Authors>ami</Authors>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

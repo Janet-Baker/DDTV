@@ -11,6 +11,7 @@
     <Authors>ami</Authors>
     <UseWindowsForms>true</UseWindowsForms>
     <UserSecretsId>dc023890-673e-444d-86e4-2cb9edf80330</UserSecretsId>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using DDTV_Core.SystemAssembly.NetworkRequestModule.WebHook;
 using ThirdParty.Json.LitJson;
 
 namespace DDTV_Core.SystemAssembly.BilibiliModule.API.LiveChatScript
@@ -363,6 +364,8 @@ namespace DDTV_Core.SystemAssembly.BilibiliModule.API.LiveChatScript
                         break;
                     //管理员警告
                     case "WARNING":
+                        Console.WriteLine(cmd);
+                        WebHook.SendHook(WebHook.HookType.WarnedByAdmin, mid);
                         MessageReceived(this, new WarningEventArg(obj));
                         break;
                     //开播_心跳
@@ -395,7 +398,13 @@ namespace DDTV_Core.SystemAssembly.BilibiliModule.API.LiveChatScript
                         break;
                     //切断直播间
                     case "CUT_OFF":
-                        MessageReceived(this, new CutOffEventArg(obj));
+                        WebHook.SendHook(WebHook.HookType.LiveCutOff, mid);
+                        MessageReceived(this, new PreparingpEventArgs(obj));
+                        break;
+                    // 直播间被超管封禁
+                    case "ROOM_LOCK":
+                        // 暂时按照下播处理（主要是不会写）
+                        MessageReceived(this, new PreparingpEventArgs(obj));
                         break;
                     default:
                         //Console.WriteLine(cmd);

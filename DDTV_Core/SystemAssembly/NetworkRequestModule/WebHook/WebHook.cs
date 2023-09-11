@@ -149,6 +149,14 @@ namespace DDTV_Core.SystemAssembly.NetworkRequestModule.WebHook
             /// 执行Shell命令结束
             /// </summary>
             ShellExecutionComplete,
+            /// <summary>
+            /// 被管理员警告
+            /// </summary>
+            WarnedByAdmin,
+            /// <summary>
+            /// 直播被管理员切断
+            /// </summary>
+            LiveCutOff,
         }
     }
 }

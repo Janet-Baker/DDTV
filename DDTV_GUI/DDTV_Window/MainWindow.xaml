@@ -594,11 +594,6 @@
                                             </hc:AdornerElement.Instance>
                                         </ToggleButton>
 
-                                        <Button Content="更新DDTV"  HorizontalAlignment="Left" Click="DDTV_UPDATE_Button_Click" Margin="760,0,0,0">
-                                            <hc:AdornerElement.Instance>
-                                                <hc:Poptip Content="点击该按钮会结束所有录制中的任务！！！并退出DDTV开始更新！" PlacementType="BottomLeft"/>
-                                            </hc:AdornerElement.Instance>
-                                        </Button>
                                     </Grid>
 
                                 </WrapPanel>

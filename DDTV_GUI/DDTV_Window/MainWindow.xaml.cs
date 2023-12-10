@@ -90,7 +90,6 @@ namespace DDTV_GUI.DDTV_Window
             PlayWindow.PlayListExit += MainWindow_PlayListExit;//注册批量关闭播放窗口事件
             FileOperation.PathAlmostFull += FileOperation_PathAlmostFull;//硬盘空间不足事件
             Tool.ServerInteraction.Start();//更新看门狗程序
-            Tool.ServerInteraction.CheckUpdates.NewUpdate += CheckUpdates_NewUpdate;//检查更新事件
             Tool.ServerInteraction.Notice.NewNotice += Notice_NewNotice;//更新首页说明事件
             BilibiliUserConfig.CheckAccount.CheckAccountChanged += CheckAccount_CheckAccountChanged;//注册登陆信息检查失效事件
             BilibiliUserConfig.CheckAccount.CheckLoginValidity();//启动账号有效性定时检查     
@@ -323,42 +322,6 @@ namespace DDTV_GUI.DDTV_Window
                     Notice.Text = N;
                 }
             });
-        }
-
-        private void CheckUpdates_NewUpdate(object? sender, EventArgs e)
-        {
-            if (!Tool.ExamineFullScreen.IsForegroundFullScreen() && !DDTV_Core.InitDDTV_Core.IsSpecialEdition)
-            {
-                if (CoreConfig.AutoInsallUpdate)
-                {
-                    bool IsDL = false;
-                    foreach (var A1 in Rooms.RoomInfo)
-                    {
-                        if (A1.Value.DownloadingList.Count > 0)
-                        {
-                            IsDL = true;
-                        }
-                    }
-                    if (IsDL || playWindowsList.Count > 0)
-                    {
-                        Growl.InfoGlobal($"DDTV检测到更新，但是当前有观看/录制任务正在进行中，等待任务结束后空闲时间会自动更新");
-                    }
-                    else
-                    {
-
-                        Log.AddLog(nameof(MainWindow), LogClass.LogType.Info, $"触发自动更新", false, null, false);
-                        Update(true);
-                    }
-                }
-                else
-                {
-                    Growl.InfoGlobal($"DDTV检测到更新，请在[设置]界面中点击[更新DDTV]进行自动更新");
-                }
-            }
-            else
-            {
-                Log.AddLog(nameof(MainWindow), LogClass.LogType.Info, $"正在运行全屏任务，跳过自动更新", false, null, false);
-            }
         }
 
         private bool CheckRepeatedRun()
@@ -1450,49 +1413,6 @@ namespace DDTV_GUI.DDTV_Window
                 {
                     Growl.Warning($"该文件路径不存在，复制失败");
                 }
-            }
-        }
-
-        private void DDTV_UPDATE_Button_Click(object sender, RoutedEventArgs e)
-        {
-            DDTV_Core.Tool.DDTV_Update.CheckUpdateProgram(true);
-            MessageBoxResult dr = MessageBox.Show($"确定要开始更新DDTV吗？\n确定后会结束DDTV全部任务并退出DDTV开始更新", "更新DDTV", MessageBoxButton.OKCancel, MessageBoxImage.Question);
-            if (dr == MessageBoxResult.OK)
-            {
-                Log.AddLog(nameof(MainWindow), LogClass.LogType.Debug, $"用户点击自动更新", false, null, false);
-                Update(false);
-            }
-        }
-
-        /// <summary>
-        /// 更新DDTV
-        /// </summary>
-        public void Update(bool IsAuto)
-        {
-            if (File.Exists("./DDTV_Update.exe"))
-            {
-                Process process = new Process();
-                process.StartInfo.FileName = "./DDTV_Update.exe";
-                if (IsAuto)
-                {
-                    process.StartInfo.Arguments += " autoupdate";
-
-                }
-                if (CoreConfig.IsDev)
-                {
-                    process.StartInfo.Arguments += " dev";
-                }
-                process.Start();
-                Dispatcher.BeginInvoke(new Action(delegate
-                {
-                    Application.Current.Shutdown();
-                }));
-
-            }
-            else
-            {
-                Growl.Error($"找不到自动更新脚本程序DDTV_Update.exe");
-                Log.AddLog(nameof(MainWindow), LogClass.LogType.Debug, $"找不到自动更新脚本程序DDTV_Update.exe", false, null, false);
             }
         }
 

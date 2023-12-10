@@ -62,14 +62,13 @@ namespace DDTV_Core
                 InitType = satrtType;
             }
             Environment.CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;//将当前路径从 引用路径 修改至 程序所在目录
-            Console.WriteLine($"========================\nDDTV_Core开始启动，当前版本:{InitType} {Ver}(编译时间:{CompiledVersion})\n========================");
+            Console.WriteLine("========================\nDDTV_Core开始启动\n========================");
             
             Log.LogInit(LogClass.LogType.Debug);//初始化日志系统，设置日志输出等级
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;//设置使用的最低安全协议（阿B目前为Tls12）
             ServicePointManager.DefaultConnectionLimit = 1024 * 1024 * 8;//连接队列上线
             ServicePointManager.Expect100Continue = false;//禁止查询服务端post状态防止卡死
             CoreConfig.ConfigInit(InitType);//初始化设置系统
-            DDTV_Update.CheckUpdateProgram();//检查更新器是否有新版本
             Task.Run(() => Tool.DDcenter.Init(InitType));//初始化DDC采集系统
             if (InitType != SatrtType.DDTV_GUI && InitType != SatrtType.DDTV_DanMu)
             {
@@ -89,41 +88,33 @@ namespace DDTV_Core
             switch (InitType)
             {
                 case SatrtType.DDTV_Core:
-                    ServerInteraction.CheckUpdates.Update("Core");
                     ServerInteraction.Dokidoki.Start("Core");
                     BilibiliUserConfig.CheckAccount.CheckLoginValidity();
                     break;
                 case SatrtType.DDTV_CLI:
-                     
-                    ServerInteraction.CheckUpdates.Update("CLI");
                     ServerInteraction.Dokidoki.Start("CLI");
                     BilibiliUserConfig.CheckAccount.CheckLoginValidity();
                     break;
                 case SatrtType.DDTV_CLI_Docker:
-                    ServerInteraction.CheckUpdates.Update("CLI");
                     ServerInteraction.Dokidoki.Start("CLI");
                     BilibiliUserConfig.CheckAccount.CheckLoginValidity();
                     break;
                 case SatrtType.DDTV_WEB:
-                    ServerInteraction.CheckUpdates.Update("WEB");
                     ServerInteraction.Dokidoki.Start("WEB");
                     ServerInteraction.UpdateNotice.Start("WEB");
                     BilibiliUserConfig.CheckAccount.CheckLoginValidity();
                     break;
                 case SatrtType.DDTV_WEB_Docker:
-                    ServerInteraction.CheckUpdates.Update("WEB");
                     ServerInteraction.Dokidoki.Start("WEB");
                     ServerInteraction.UpdateNotice.Start("WEB");
                     BilibiliUserConfig.CheckAccount.CheckLoginValidity();
                     break;
                 case SatrtType.DDTV_GUI:
-                    //ServerInteraction.CheckUpdates.Update("GUI");
                     ServerInteraction.Dokidoki.Start("GUI");
                     break;
                 case SatrtType.DDTV_DanMu:
                     break;
                 default:
-                    //ServerInteraction.CheckUpdates.Update("Core");
                     ServerInteraction.Dokidoki.Start("Core");
                     break;
             }

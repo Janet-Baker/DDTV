@@ -364,7 +364,7 @@ namespace DDTV_Core.SystemAssembly.BilibiliModule.API.LiveChatScript
                         break;
                     //管理员警告
                     case "WARNING":
-                        Console.WriteLine(cmd);
+                        Console.WriteLine(obj);
                         WebHook.SendHook(WebHook.HookType.WarnedByAdmin, mid);
                         MessageReceived(this, new WarningEventArg(obj));
                         break;
@@ -398,16 +398,18 @@ namespace DDTV_Core.SystemAssembly.BilibiliModule.API.LiveChatScript
                         break;
                     //切断直播间
                     case "CUT_OFF":
+                        Console.WriteLine(obj);
                         WebHook.SendHook(WebHook.HookType.LiveCutOff, mid);
                         MessageReceived(this, new PreparingpEventArgs(obj));
                         break;
                     // 直播间被超管封禁
                     case "ROOM_LOCK":
+                        Console.WriteLine(obj);
                         // 暂时按照下播处理（主要是不会写）
                         MessageReceived(this, new PreparingpEventArgs(obj));
                         break;
                     default:
-                        //Console.WriteLine(cmd);
+                        //Console.WriteLine(obj);
                         //Log.Log.AddLog(nameof(LiveChatListener), Log.LogClass.LogType.Info, $"收到未知CMD:{cmd}");
                         MessageReceived(this, new MessageEventArgs(obj));
                         break;

@@ -3,11 +3,13 @@ name: DDTV5_Release
 on:
   push:
     tags:
-      - "release*"
+      - "releases*"
   pull_request:
     paths:
       - 'Server/**'
+      - 'Client/**'
       - 'Desktop/**'
+      - '.github/workflows/DDTV_Dev_CLI.yml'
       - '!**/README.md'
   workflow_dispatch:
 
@@ -158,44 +160,28 @@ jobs:
           start Server.exe
           "@
           Set-Content -Path $bat_file_path -Value $command
-      
-      - name: List all files (Linux or macOS)
-        if: runner.os != 'Windows'
-        run: |
-          echo "Absolute paths:"
-          find "$(pwd)/Server/build_output" -type f
-          echo "Relative paths:"
-          find Server/build_output -type f
-        shell: bash
 
-      - name: List all files (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          echo "Absolute paths:"
-          Get-ChildItem -Path "$(Resolve-Path Server/build_output)" -File -Recurse | ForEach-Object FullName
-          echo "Relative paths:"
-          Get-ChildItem -Path "Server/build_output" -File -Recurse | ForEach-Object Name
-        shell: powershell
-
-        
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          name: DDTV-Server-${{ matrix.os }}-${{ matrix.runtime }}
-          path: Server/build_output
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: true
 
-      - name: Docker Release
-        uses: moomiji/docker-ddtv@v5
-        if: false
-#       if: ${{ contains(matrix.runtime, 'linux') }}
+      - name: Upload Release Asset
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          push:       ${{ github.ref_type == 'tag' }}
-          repo:       ddtv/cli
-          path:       ${{ github.workspace }}/Server/build_output
-          version:    ${{ github.ref_name }}
-          runtime:    ${{ matrix.runtime }}
-          image_id:   ${{ contains(matrix.runtime, 'musl') && 'alpine' || 'debian' }}
-          build-args: REPO=mcr.microsoft.com/dotnet/runtime-deps:${{ contains(matrix.runtime, 'musl') && '8.0-alpine' || '8.0' }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./Server/build_output/your_build_file.zip # TODO: Replace this with the path to your build file
+          asset_name: your_build_file.zip # TODO: Replace this with the name you want to give to your build file
+          asset_content_type: application/zip
 
   Desktop:
     strategy:
@@ -205,7 +191,6 @@ jobs:
             runtime: win-x86
           - os: windows-latest
             runtime: win-x64
-
 
     runs-on: ${{ matrix.os }}
 
@@ -270,7 +255,6 @@ jobs:
           mkdir Desktop\\build_output\\plugins\\plugins\\ffmpeg
           copy Desktop\\plugins\\ffmpeg\\ffmpeg.exe Desktop\\build_output\\plugins\\plugins\\ffmpeg\\ffmpeg.exe
 
-          
       - name: Move all files to bin folder and create shortcut (Windows)  
         if: runner.os == 'Windows'
         shell: pwsh
@@ -284,71 +268,25 @@ jobs:
           start Desktop.exe
           "@
           Set-Content -Path $bat_file_path -Value $command
-        
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: DDTV-Desktop-${{ matrix.os }}-${{ matrix.runtime }}
-          path: Desktop/build_output
-
-  release:
-    needs: [Server, Desktop]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: /home/runner/work/DDTV/DDTV/
-      
-      - name: Print all downloaded files
-        run: |
-          echo "Printing all downloaded files:"
-          find "$(pwd)" -type f
 
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: true
 
-      - name: Print all files in the working directory
-        run: |
-          echo "Printing all files in the working directory:"
-          find "$(pwd)" -type f
-
-      - name: Upload Release Assets
-        id: upload-release-assets
-        uses: actions/github-script@v5
+      - name: Upload Release Asset
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-            const upload_url = "${{ steps.create_release.outputs.upload_url }}";
-            const artifacts_dir = './';
-            fs.readdirSync(artifacts_dir).forEach(dir => {
-              if (dir.startsWith('DDTV-')) {
-                fs.readdirSync(path.join(artifacts_dir, dir)).forEach(file => {
-                  if (path.extname(file) === '.zip') {
-                    const file_path = path.join(artifacts_dir, dir, file);
-                    github.repos.uploadReleaseAsset({
-                      url: upload_url,
-                      headers: {
-                        'content-length': fs.statSync(file_path).size,
-                        'content-type': 'application/zip',
-                      },
-                      name: path.basename(file),
-                      file: fs.createReadStream(file_path)
-                    });
-                  }
-                });
-              }
-            });
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./Desktop/build_output/your_build_file.zip # TODO: Replace this with the path to your build file
+          asset_name: your_build_file.zip # TODO: Replace this with the name you want to give to your build file
+          asset_content_type: application/zip

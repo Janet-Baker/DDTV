@@ -438,3 +438,4 @@ healthchecksdb
 *.diagsession
 /TESTP
 /PushUpdate
+/Update

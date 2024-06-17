@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Server.WebAppServices.WS
 {
-    internal class WebSocketQueue
+    public class WebSocketQueue
     {
         private static bool _start = false;
-        internal static void Start()
+        public static void Start()
         {
             Task.Run(() =>
             {

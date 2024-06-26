@@ -31,13 +31,6 @@ namespace Core
 
         public static void Start(string[] args)
         {
-            if (!OperatingSystem.IsWindows())
-            {
-                Console.WriteLine("当前为非Windows环境，请确保已安装ffmpeg，否则自动修复和封装转码会失败！");
-                Console.WriteLine("当前为非Windows环境，请确保已安装ffmpeg，否则自动修复和封装转码会失败！");
-                Console.WriteLine("当前为非Windows环境，请确保已安装ffmpeg，否则自动修复和封装转码会失败！");
-                Console.WriteLine("如确认已安装，可忽略该消息。");
-            }
             stopwatch.Start();
             CoreStartCompletEvent += (sender, e) =>
             {
@@ -68,15 +61,6 @@ namespace Core
             Log.Info(nameof(Init), $"Core初始化完成");
             Log.Info(nameof(Init), $"启动耗时{stopwatch.ElapsedMilliseconds}毫秒");
             Task.Run(() => CoreStartCompletEvent?.Invoke(null, new EventArgs()));
-            if (Mode != Mode.Core)
-            {
-                Update_Timer = new Timer(Core.Tools.ProgramUpdates.RegularInspection, null, 1, 1000 * 60 * 30);
-                Core.Tools.ProgramUpdates.NewVersionAvailableEvent += ProgramUpdates_NewVersionAvailableEvent;
-            }
-            StartStatistics();
-            Timer_Heartbeat = new Timer(HeartbeatStatistics, null, 1, 1000 * 3600);
-
-
         }
 
 
@@ -183,68 +167,5 @@ namespace Core
             }
             Tools.FileOperations.DeleteEmptyDirectories(Core.Config.Core_RunConfig._TemporaryFileDirectory);
         }
-
-        private static void ProgramUpdates_NewVersionAvailableEvent(object? sender, EventArgs e)
-        {
-            switch (Mode)
-            {
-                case Mode.Client:
-                    break;
-                case Mode.Desktop:
-                    break;
-                default:
-                    Log.Warn("ProgramUpdates", $"\r\n=====检测到新版本=====\r\n检测到DDTV新版本：【{sender}】，请关闭DDTV后，执行Update文件夹中的Update程序进行升级\r\n=====检测到新版本=====\r\n");
-                    break;
-            }
-        }
-
-        public static Timer Timer_Heartbeat;
-
-        private static void StartStatistics()
-        {
-            try
-            {
-                using (HttpClient _httpClient = new HttpClient())
-                {
-                    _httpClient.Timeout = new TimeSpan(0, 0, 8);
-                    _httpClient.DefaultRequestHeaders.Referrer = new Uri("https://update5.ddtv.pro");
-                    _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"System/{System.Runtime.InteropServices.RuntimeInformation.OSDescription} DDTV/{Ver} Bili/{RuntimeObject.Account.AccountInformation.Uid}");
-                    string A = _httpClient.GetStringAsync("https://update5.ddtv.pro/Start.txt").Result;
-                    if (A == "1" || A == "1\r\n")
-                    {
-                        Log.Info(nameof(StartStatistics), "启动统计正常");
-                    }
-                    else
-                    {
-                        Log.Info(nameof(StartStatistics), "启动统计异常");
-                    }
-                }
-            }
-            catch (Exception) { }
-        }
-
-        public static void HeartbeatStatistics(object state)
-        {
-            try
-            {
-                using (HttpClient _httpClient = new HttpClient())
-                {
-                    _httpClient.Timeout = new TimeSpan(0, 0, 8);
-                    _httpClient.DefaultRequestHeaders.Referrer = new Uri("https://update5.ddtv.pro");
-                    _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"System/{System.Runtime.InteropServices.RuntimeInformation.OSDescription} DDTV/{Ver} Bili/{RuntimeObject.Account.AccountInformation.Uid}");
-                    string A = _httpClient.GetStringAsync("https://update5.ddtv.pro/Heartbeat.txt").Result;
-                    if (A == "1" || A == "1\r\n")
-                    {
-                        Log.Info(nameof(HeartbeatStatistics), "心跳正常");
-                    }
-                    else
-                    {
-                        Log.Warn(nameof(HeartbeatStatistics), "心跳异常");
-                    }
-                }
-            }
-            catch (Exception) { }
-        }
-
     }
 }

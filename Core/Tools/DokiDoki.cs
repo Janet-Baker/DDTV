@@ -28,7 +28,7 @@ namespace Core.Tools
                 Ver = Init.Ver,
                 StartMode = Core.Init.Mode
             };
-            dokiClass.CompilationMode = Core.Config.Core_RunConfig._DevelopmentVersion ? "Dev" : "Release";
+            dokiClass.CompilationMode = "Release";
 
             return dokiClass;
 

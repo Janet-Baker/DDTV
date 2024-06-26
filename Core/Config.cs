@@ -94,8 +94,7 @@ namespace Core
         internal static Dictionary<string, Action<string>> OptionHandlers = new Dictionary<string, Action<string>>(StringComparer.OrdinalIgnoreCase)
         {
             { "StartMode", ExpandOption.SetStartMode },
-            { "RecordingMode", ExpandOption.SetRecordingMode },
-            { "no-update", ExpandOption.SetNoUpdate}
+            { "RecordingMode", ExpandOption.SetRecordingMode }
         };
 
         public static RunConfig Core_RunConfig { get; set; } = new();
@@ -154,10 +153,6 @@ namespace Core
                         Core_RunConfig._RecordingMode = RecordingMode.HLS_Only;
                         break;
                 }
-            }
-            internal static void SetNoUpdate(string value)
-            {
-                ProgramUpdates.Effective = false;
             }
         }
 
@@ -1341,28 +1336,6 @@ namespace Core
                     if (value.ToString() != SystemCardReminder)
                     {
                         SystemCardReminder = value.ToString();
-                        OnPropertyChanged();
-                        ModifyConfig(value);
-                    }
-                }
-            }
-
-            private static string DevelopmentVersion = "false";
-            /// <summary>
-            /// 是否接受开发版更新
-            /// 默认值：false
-            /// </summary>
-            public bool _DevelopmentVersion
-            {
-                get
-                {
-                    return bool.Parse(DevelopmentVersion);
-                }
-                set
-                {
-                    if (value.ToString() != DevelopmentVersion)
-                    {
-                        DevelopmentVersion = value.ToString();
                         OnPropertyChanged();
                         ModifyConfig(value);
                     }

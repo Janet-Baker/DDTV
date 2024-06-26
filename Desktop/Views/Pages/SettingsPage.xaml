@@ -21,13 +21,10 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <ui:Button Grid.Column="0" Margin="0,0,0,10" Content="保存全部" FontSize="20" HorizontalAlignment="Left" Icon="{ui:SymbolIcon Save20}" Click="Config_Save_Button_Click"/>
                 <ui:TextBlock Name="SaveTips" Grid.Column="1" Margin="10,8,0,0"  FontSize="16" FontTypography="Body" HorizontalAlignment="Left"  Text="请注意：未保存退出当前页面将丢失已修改内容" />
-                <ui:Button Grid.Column="2" Margin="30,0,0,10" Content="生成排故调试快照" FontSize="20" HorizontalAlignment="Right" Icon="{ui:SymbolIcon BugArrowCounterclockwise20}" Click="Generate_Debug_Click" ToolTipService.InitialShowDelay="100" ToolTipService.Placement="MousePoint" ToolTipService.ToolTip="点击后将会将现在的配置和本次启动产生的日志文件打包加密生成一个zip包"/>
-                <ui:Button Grid.Column="3" Margin="30,0,0,10" Content="检查更新" FontSize="20" HorizontalAlignment="Right" Icon="{ui:SymbolIcon DocumentHeaderArrowDown20}" Click="CheckForUpdates_Click"/>
             </Grid>
 
             <Grid>
@@ -60,7 +57,47 @@
                         </Grid>
                     </ui:CardExpander.Header>
                     <StackPanel Margin="24,0.5,24,0">
-                        
+                        <ui:CardExpander Grid.Row="0" Icon="{ui:SymbolIcon DatabaseArrowRight24}">
+                            <ui:CardExpander.Header>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="连接远程DDTV5 Server" />
+                                    <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="不是用本Destop自带的服务端，而使用远程服务器" />
+                                    <ui:ToggleSwitch Name="DesktopRemoteServer_SwitchControl" IsChecked="{Binding _DesktopRemoteServer, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
+                                </Grid>
+                            </ui:CardExpander.Header>
+                            <StackPanel Margin="24,0.5,24,0">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Margin="0,0,10,0" Content="远程服务器地址" />
+                                    <ui:TextBox Name="DesktopIP_InputControl" Grid.Row="1" Grid.Column="0" Margin="0,0,10,0" PlaceholderText="http://127.0.0.1" Text="{Binding _DesktopIP, Mode=OneWay}"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" Content="远程服务器端口(Port)" />
+                                    <ui:NumberBox Name="DesktopPort_InputControl" Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" PlaceholderText="11419" Minimum="1" Maximum="65535" Text="{Binding _DesktopPort, Mode=OneWay}"/>
+
+                                    <Label Grid.Row="2" Grid.Column="0" Margin="0,10,10,0" Content="远程服务器AccessKeyId" />
+                                    <ui:TextBox Name="DesktopAccessKeyId_InputControl" Grid.Row="3" Grid.Column="0" Margin="0,0,10,0" Text="{Binding _DesktopAccessKeyId, Mode=OneWay}"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Margin="10,10,0,0" Content="远程服务器AccessKeySecret" />
+                                    <ui:TextBox Name="DesktopAccessKeySecret_InputControl" Grid.Row="3" Grid.Column="1" Margin="10,0,0,0" Text="{Binding _DesktopAccessKeySecret, Mode=OneWay}"/>
+                                </Grid>
+                            </StackPanel>
+                        </ui:CardExpander>
                         <ui:CardControl Padding="20,10,20,10" Header="缩小主窗口时的默认行为" Icon="{ui:SymbolIcon ArrowExit20}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -76,30 +113,6 @@
                                         <ComboBoxItem Content="缩小到任务栏"/>
                                         <ComboBoxItem Content="缩小到后台托盘" />
                                     </ComboBox>
-                                </Grid>
-                            </Grid>
-                        </ui:CardControl>
-
-                        <ui:CardControl Padding="20,10,20,10" Header="阻止系统休眠（打开后会阻止系统进入休眠，防止录制失败）" Icon="{ui:SymbolIcon Sleep20}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
-                                    <ui:ToggleSwitch Name="PreventWindowsHibernation_ToggleSwitch" Height="35" IsChecked="{Binding _PreventWindowsHibernation, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
-                                </Grid>
-                            </Grid>
-                        </ui:CardControl>
-
-                        <ui:CardControl Padding="20,10,20,10" Header="接收开发版更新　（新功能功能优先推送）" Icon="{ui:SymbolIcon DeveloperBoardLightningToolbox20}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
-                                    <ui:ToggleSwitch Name="DevelopmentVersion_ToggleSwitch" Height="35" IsChecked="{Binding _DevelopmentVersion, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
                                 </Grid>
                             </Grid>
                         </ui:CardControl>
@@ -154,49 +167,6 @@
                                 </Grid>
                             </StackPanel>
                         </ui:CardExpander>
-
-                        <ui:CardExpander Grid.Row="0" Icon="{ui:SymbolIcon DatabaseArrowRight24}">
-                            <ui:CardExpander.Header>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="连接远程DDTV5 Server" />
-                                    <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="关闭本地Destop自带的服务端功能，连接并使用远程服务器上的服务端。【如果没看懂，就别开】" />
-                                    <ui:ToggleSwitch Name="DesktopRemoteServer_SwitchControl" IsChecked="{Binding _DesktopRemoteServer, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
-                                </Grid>
-                            </ui:CardExpander.Header>
-                            <StackPanel Margin="24,0.5,24,0">
-
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Grid.Column="0" Margin="0,0,10,0" Content="远程服务器地址" />
-                                    <ui:TextBox Name="DesktopIP_InputControl" Grid.Row="1" Grid.Column="0" Margin="0,0,10,0" PlaceholderText="http://127.0.0.1" Text="{Binding _DesktopIP, Mode=OneWay}"/>
-                                    <Label Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" Content="远程服务器端口(Port)" />
-                                    <ui:NumberBox Name="DesktopPort_InputControl" Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" PlaceholderText="11419" Minimum="1" Maximum="65535" Text="{Binding _DesktopPort, Mode=OneWay}"/>
-
-                                    <Label Grid.Row="2" Grid.Column="0" Margin="0,10,10,0" Content="远程服务器AccessKeyId" />
-                                    <ui:TextBox Name="DesktopAccessKeyId_InputControl" Grid.Row="3" Grid.Column="0" Margin="0,0,10,0" Text="{Binding _DesktopAccessKeyId, Mode=OneWay}"/>
-                                    <Label Grid.Row="2" Grid.Column="1" Margin="10,10,0,0" Content="远程服务器AccessKeySecret" />
-                                    <ui:TextBox Name="DesktopAccessKeySecret_InputControl" Grid.Row="3" Grid.Column="1" Margin="10,0,0,0" Text="{Binding _DesktopAccessKeySecret, Mode=OneWay}"/>
-                                </Grid>
-                            </StackPanel>
-                        </ui:CardExpander>
-
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
@@ -586,54 +556,6 @@
                             </Grid>
                         </ui:CardControl>
 
-                        <ui:CardControl Padding="15,20,20,20" Header="录制并修复完成后，删除原始文件（如果网络环境不好，可以关闭该选项，保留原始文件）" Icon="{ui:SymbolIcon DeleteArrowBack20}" ToolTipService.InitialShowDelay="100" ToolTipService.Placement="MousePoint">
-                            <ToolTipService.ToolTip>
-                                <ToolTip Width="500">
-                                    <TextBlock Text="当网络环境不好（主播或者你本地）时，可能会产生录制了很长时间，但是修复后文件很小的情况。&#x0a; 这是由于原始直播文件时间戳错误导致的，DDTV录制完成后的修复操作使用的是-copy操作，原始文件是怎样就输出怎样。&#x0a; 这种情况下可以尝试关掉本开关，关掉后，修复完成后会保留原始文件，之后可以尝试用其他转码软件对原始文件进行转码尝试修复" TextWrapping="Wrap"/>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
-                                    <ui:ToggleSwitch Name="DeleteOriginalFileAfterRepair_SwitchControl" IsChecked="{Binding _DeleteOriginalFileAfterRepair, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
-                                </Grid>
-                            </Grid>
-                        </ui:CardControl>
-
-                        <ui:CardExpander Icon="{ui:SymbolIcon TextBulletListSquareShield20}">
-                            <ui:CardExpander.Header>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" FontTypography="Body" Text="设置屏蔽词" />
-                                        <ui:TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Text="如果弹幕信息中包含屏蔽词内容，这条弹幕信息将会在全局被忽略" />
-                                    </Grid>
-                                </Grid>
-                            </ui:CardExpander.Header>
-                            <StackPanel Margin="24,0.5,24,0">
-                                <Grid>
-                                    <ui:TextBox Name="BlockBarrageList_TextBox" PlaceholderText="请输入屏蔽词，不同的屏蔽词之间，使用'|'符号进行分割" Text="{Binding _BlockBarrageList,Mode=OneWay}"/>
-                                </Grid>
-                            </StackPanel>
-                        </ui:CardExpander>
                     </StackPanel>
                 </ui:CardExpander>
                 <ui:CardExpander Grid.Row="4" Icon="{ui:SymbolIcon CalendarPlay20}">

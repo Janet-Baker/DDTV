@@ -206,11 +206,6 @@ namespace Server
 
                             //启动房间监听并且注册事件
                             Detect detect = new();
-                            //控制台打印心跳日志
-                            doki();
-                            //终端和ws更新事件
-                            Core.Tools.ProgramUpdates.NewVersionAvailableEvent += ProgramUpdates_NewVersionAvailableEvent;
-
 
                             if (Init.Mode!= Config.Mode.Desktop && Config.Core_RunConfig._DesktopRemoteServer)
                             {
@@ -255,11 +250,6 @@ namespace Server
 
 
                     });
-                }
-
-                private void ProgramUpdates_NewVersionAvailableEvent(object? sender, EventArgs e)
-                {
-                    OperationQueue.Add(Opcode.Config.UpdateDetect, $"检测到DDTV新版本：【{sender}】");
                 }
 
                 public override Task StopAsync(CancellationToken stoppingToken)
@@ -308,43 +298,6 @@ namespace Server
                     }
                 }
                 return;
-            });
-        }
-
-
-        /// <summary>
-        /// 用于打印控制台心跳信息
-        /// </summary>
-        public static void doki()
-        {
-            Task.Run(() =>
-            {
-                while (true)
-                {
-                    var doki = Core.Tools.DokiDoki.GetDoki();
-                    Log.Info("DokiDoki", $"总:{doki.Total}|录制中:{doki.Downloading}|使用内存:{doki.UsingMemoryStr}|{doki.InitType}|{doki.Ver}|{Enum.GetName(typeof(Config.Mode), doki.StartMode)}【{doki.CompilationMode}】(编译时间:{doki.CompiledVersion})");
-                    if (doki.UsingMemory > 4294967296)
-                    {
-                        Log.Error("DokiDoki", $"检测到内存泄漏严重，3秒后自动停止运行");
-                        Thread.Sleep(3000);
-                        Environment.Exit(-114514);
-                    }
-#if DEBUG
-                    Thread.Sleep(60 * 1000);
-#else
-                    Thread.Sleep(300 * 1000);
-#endif
-                }
-            });
-
-            Task.Run(() =>
-            {
-                while (true)
-                {
-                    var doki = Core.Tools.DokiDoki.GetDoki();
-                    MessageBase.MssagePack("dokidoki", doki, "dokidoki");
-                    Thread.Sleep(30 * 1000);
-                }
             });
         }
 

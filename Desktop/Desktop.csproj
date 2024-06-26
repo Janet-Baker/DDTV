@@ -12,7 +12,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <PackageIcon>DDTV.ico</PackageIcon>
-    <Platforms>AnyCPU</Platforms>
+    <Platforms>AnyCPU;x64</Platforms>
     <ApplicationIcon>Assets\DDTV.ico</ApplicationIcon>
   </PropertyGroup>
 
@@ -20,7 +20,15 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 

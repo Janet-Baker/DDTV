@@ -271,7 +271,7 @@ public partial class SettingsPage
             }
         }
 
-        #region 基础设置相关设
+        #region 基础设置
         //远程连接配置保存
         Config.Core_RunConfig._DesktopRemoteServer = (bool)DesktopRemoteServer_SwitchControl.IsChecked;
         if (DesktopRemoteServer_SwitchControl.IsChecked == true ? true : false)
@@ -306,11 +306,6 @@ public partial class SettingsPage
             {
                 WindowsAPI.OpenWindowsHibernation();
             }
-        }
-        //开发版更新配置
-        if (Config.Core_RunConfig._DevelopmentVersion != DevelopmentVersion_ToggleSwitch.IsChecked)
-        {
-            Config.Core_RunConfig._DevelopmentVersion = (bool)DevelopmentVersion_ToggleSwitch.IsChecked;
         }
         //WebHook配置保存
         if (Config.Core_RunConfig._WebHookSwitch != WebHook_SwitchControl.IsChecked)
@@ -511,36 +506,6 @@ public partial class SettingsPage
     #endregion
 
 
-
-    private async void CheckForUpdates_Click(object sender, RoutedEventArgs e)
-    {
-        MainWindow.SnackbarService.Show("检查更新", "正在检测更新，请稍候...", ControlAppearance.Info, new SymbolIcon(SymbolRegular.ArrowSync20), TimeSpan.FromSeconds(5));
-        if (await Core.Tools.ProgramUpdates.CheckForNewVersions(false, true))
-        {
-            var cd = new ContentDialog
-            {
-                Title = "检测到更新，是否更新？",
-                Content = "确认更新将会关闭DDTV，然后进行更新。",
-                PrimaryButtonText = "确认更新",
-                CloseButtonText = "取消",
-                DefaultButton = ContentDialogButton.Close
-            };
-            var cancellationToken = new CancellationToken();
-            var result = await MainWindow._contentDialogService.ShowAsync(cd, cancellationToken);
-            if (result != ContentDialogResult.Primary)
-            {
-                return;
-            }
-            Core.Tools.ProgramUpdates.CallUpUpdateProgram();
-        }
-        else
-        {
-            MainWindow.SnackbarService.Show("检查更新", "当前已是最新版本", ControlAppearance.Success, new SymbolIcon(SymbolRegular.ArrowSync20), TimeSpan.FromSeconds(3));
-        }
-
-
-    }
-
     private void SelectRecordingFolder_Click(object sender, RoutedEventArgs e)
     {
         // 创建一个FolderBrowserDialog对象
@@ -590,7 +555,7 @@ public partial class SettingsPage
             });
         }
     }
-
+    
     private void Generate_Debug_Click(object sender, RoutedEventArgs e)
     {
         string DebugFilePath = Core.Tools.DebuggingRecord.GenerateReportSnapshot();

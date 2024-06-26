@@ -4,14 +4,23 @@
 // All Rights Reserved.
 
 using Core;
+using Desktop.Models;
 using Desktop.Views.Windows;
-using SharpCompress.Common;
+using Masuit.Tools;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Windows;
-using System.Windows.Media;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Media;
+using System.Windows.Navigation;
+using Wpf.Ui;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Extensions;
 using static Core.RuntimeObject.Download.Basics;
 
 namespace Desktop.Views.Pages;
@@ -119,7 +128,7 @@ public partial class SettingsPage
         {
             MainWindow.SnackbarService.Show("保存失败", "请检查确保WebHook地址配置正确且不为空", ControlAppearance.Danger, new SymbolIcon(SymbolRegular.SaveSearch20), TimeSpan.FromSeconds(8));
             return false;
-        }
+        }     
         #endregion
 
         #region 文件路径相关设置检查
@@ -169,7 +178,7 @@ public partial class SettingsPage
 
         #region 播放窗口设置
         //弹幕速度设置
-        if (string.IsNullOrEmpty(PlayWindowDanmaSpeed_InputBox.Text) && int.Parse(PlayWindowDanmaSpeed_InputBox.Text) > 0)
+        if (string.IsNullOrEmpty(PlayWindowDanmaSpeed_InputBox.Text) && int.Parse(PlayWindowDanmaSpeed_InputBox.Text)>0)
         {
             MainWindow.SnackbarService.Show("保存失败", "请检查确播放窗口弹幕速度参数配置正确且不为空", ControlAppearance.Danger, new SymbolIcon(SymbolRegular.SaveSearch20), TimeSpan.FromSeconds(8));
             return false;
@@ -221,7 +230,7 @@ public partial class SettingsPage
             }
         }
 
-        #region 基础设置相关设
+        #region 保存远程连接相关设置 
         //远程连接配置保存
         Config.Core_RunConfig._DesktopRemoteServer = (bool)DesktopRemoteServer_SwitchControl.IsChecked;
         if (DesktopRemoteServer_SwitchControl.IsChecked == true ? true : false)
@@ -244,24 +253,6 @@ public partial class SettingsPage
         //API_Url配置保存
         Config.Core_RunConfig._MainDomainName = MainDomainName_TextBox.Text;
         Config.Core_RunConfig._LiveDomainName = LiveDomainName_TextBox.Text;
-        //修改系统休眠行为
-        if (Config.Core_RunConfig._PreventWindowsHibernation != PreventWindowsHibernation_ToggleSwitch.IsChecked)
-        {
-            Config.Core_RunConfig._PreventWindowsHibernation = (bool)PreventWindowsHibernation_ToggleSwitch.IsChecked;
-            if (Config.Core_RunConfig._SystemCardReminder)
-            {
-                WindowsAPI.CloseWindowsHibernation();
-            }
-            else
-            {
-                WindowsAPI.OpenWindowsHibernation();
-            }
-        }
-        //开发版更新配置
-        if (Config.Core_RunConfig._DevelopmentVersion != DevelopmentVersion_ToggleSwitch.IsChecked)
-        {
-            Config.Core_RunConfig._DevelopmentVersion = (bool)DevelopmentVersion_ToggleSwitch.IsChecked;
-        }
         //WebHook配置保存
         if (Config.Core_RunConfig._WebHookSwitch != WebHook_SwitchControl.IsChecked)
         {
@@ -320,16 +311,7 @@ public partial class SettingsPage
         {
             Config.Core_RunConfig._SaveCover = (bool)SaveCover_SwitchControl.IsChecked;
         }
-        //修复完成后删除原始文件开关
-        if (Config.Core_RunConfig._DeleteOriginalFileAfterRepair != DeleteOriginalFileAfterRepair_SwitchControl.IsChecked)
-        {
-            Config.Core_RunConfig._DeleteOriginalFileAfterRepair = (bool)DeleteOriginalFileAfterRepair_SwitchControl.IsChecked;
-        }
-        //设置屏蔽词
-        if (Config.Core_RunConfig._BlockBarrageList != BlockBarrageList_TextBox.Text)
-        {
-            Config.Core_RunConfig._BlockBarrageList = BlockBarrageList_TextBox.Text;
-        }
+
         #endregion
 
         #region 播放窗口设置
@@ -383,36 +365,6 @@ public partial class SettingsPage
     #endregion
 
 
-
-    private async void CheckForUpdates_Click(object sender, RoutedEventArgs e)
-    {
-        MainWindow.SnackbarService.Show("检查更新", "正在检测更新，请稍候...", ControlAppearance.Info, new SymbolIcon(SymbolRegular.ArrowSync20), TimeSpan.FromSeconds(5));
-        if (await Core.Tools.ProgramUpdates.CheckForNewVersions(false, true))
-        {
-            var cd = new ContentDialog
-            {
-                Title = "检测到更新，是否更新？",
-                Content = "确认更新将会关闭DDTV，然后进行更新。",
-                PrimaryButtonText = "确认更新",
-                CloseButtonText = "取消",
-                DefaultButton = ContentDialogButton.Close
-            };
-            var cancellationToken = new CancellationToken();
-            var result = await MainWindow._contentDialogService.ShowAsync(cd, cancellationToken);
-            if (result != ContentDialogResult.Primary)
-            {
-                return;
-            }
-            Core.Tools.ProgramUpdates.CallUpUpdateProgram();
-        }
-        else
-        {
-            MainWindow.SnackbarService.Show("检查更新", "当前已是最新版本", ControlAppearance.Success, new SymbolIcon(SymbolRegular.ArrowSync20), TimeSpan.FromSeconds(3));
-        }
-
-
-    }
-
     private void SelectRecordingFolder_Click(object sender, RoutedEventArgs e)
     {
         // 创建一个FolderBrowserDialog对象
@@ -460,24 +412,6 @@ public partial class SettingsPage
                 QrLogin qrLogin = new QrLogin();
                 qrLogin.ShowDialog();
             });
-        }
-    }
-
-    private void Generate_Debug_Click(object sender, RoutedEventArgs e)
-    {
-        string DebugFilePath = Core.Tools.DebuggingRecord.GenerateReportSnapshot();
-        if(string.IsNullOrEmpty(DebugFilePath))
-        {
-            MainWindow.SnackbarService.Show("生成排故快照", "生成排故障快照文件失败...", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.ArrowSync20), TimeSpan.FromSeconds(5));
-        }
-        else
-        {
-            if (File.Exists(DebugFilePath))
-            {
-                FileInfo fileInfo = new(DebugFilePath);
-                Process.Start("explorer.exe", $"/select,\"{fileInfo.FullName}\"");
-            }
-
         }
     }
 }

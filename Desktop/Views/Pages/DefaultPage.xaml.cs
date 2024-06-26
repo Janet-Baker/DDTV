@@ -9,7 +9,6 @@ using Desktop.Models;
 using System;
 using System.Net;
 using System.Net.Sockets;
-using static Core.Tools.DokiDoki;
 using static Core.Tools.SystemResource.Overview;
 using static Server.WebAppServices.Api.get_system_resources;
 using static System.Windows.Forms.AxHost;
@@ -41,8 +40,6 @@ public partial class DefaultPage
         UpdateHardwareResourceUtilizationRateTimer = new Timer(UpdateHardwareResourceUtilizationRate, null, 1000, 60 * 1000);
         //更新运行时长
         UpdateRuntimeStatisticsTimer = new Timer(UpdateRuntimeStatistics, null, 1000, 1000);
-        //更新公告
-        UpdateAnnouncementTimer = new Timer(UpdateAnnouncement, null, 1, 1000 * 60 * 60);
         //代理状态检测
         ProxyDetectionTimer = new Timer(ProxyDetection, null, 1, 1000 * 60 * 30);
         //IP版本检测
@@ -94,25 +91,6 @@ public partial class DefaultPage
     {
         PageComboBoxItems.ProxyUrl = str;
         PageComboBoxItems.OnPropertyChanged("ProxyUrl");
-    }
-
-    /// <summary>
-    /// 更新公告
-    /// </summary>
-    /// <param name="state"></param>
-    public static void UpdateAnnouncement(object state)
-    {
-
-        try
-        {
-            string announcement = Core.Tools.ProgramUpdates.Get("/announcement.txt");
-            PageComboBoxItems.announcement = announcement;
-            PageComboBoxItems.OnPropertyChanged("announcement");
-        }
-        catch (Exception ex)
-        {
-            Log.Warn(nameof(UpdateAnnouncement), "更新公告出现错误，错误堆栈已写文本记录文件", ex, false);
-        }
     }
 
     /// <summary>
@@ -207,8 +185,6 @@ public partial class DefaultPage
             {
                 count = Core.RuntimeObject._Room.Overview.GetRoomStatisticsOverview();
             }
-
-
             SetMonitoringCount(count.MonitoringCount);
             SetLiveCount(count.LiveCount);
             SetRecCount(count.RecCount);
@@ -237,8 +213,6 @@ public partial class DefaultPage
                 systemResourceClass = Core.Tools.SystemResource.Overview.GetOverview();
             }
 
-
-            
             if (systemResourceClass != null)
             {
                 int memory = (int)((double)(1 - ((double)systemResourceClass.Memory.Available / (double)systemResourceClass.Memory.Total)) * 100);

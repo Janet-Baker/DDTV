@@ -1,5 +1,4 @@
-﻿using Amazon.Runtime.Internal.Transform;
-using Core.LogModule;
+﻿using Core.LogModule;
 using Core.RuntimeObject;
 using Core.Tools;
 using System.ComponentModel;
@@ -98,8 +97,6 @@ namespace Core
             { "StartMode", ExpandOption.SetStartMode },
             //设置启动后使用的录制模式
             { "RecordingMode", ExpandOption.SetRecordingMode },
-            //设置启动后是否执行自动升级逻辑，这个参数只用携带，没有参数
-            { "no-update", ExpandOption.SetNoUpdate},
             //设置配置文件路径
             { "conf", ExpandOption.SetConfigFilePath},
             //设置直接接同意用户协议，终端不再弹出确认
@@ -164,14 +161,6 @@ namespace Core
                 }
             }
             /// <summary>
-            /// 设置启动后是否执行自动升级逻辑
-            /// </summary>
-            /// <param name="value"></param>
-            internal static void SetNoUpdate(string value)
-            {
-                ProgramUpdates.Effective = false;
-            }
-             /// <summary>
             /// 设置启动后是否执行自动升级逻辑
             /// </summary>
             /// <param name="value"></param>
@@ -1393,28 +1382,6 @@ namespace Core
                     if (value.ToString() != SystemCardReminder)
                     {
                         SystemCardReminder = value.ToString();
-                        OnPropertyChanged();
-                        ModifyConfig(value);
-                    }
-                }
-            }
-
-            private static string DevelopmentVersion = "false";
-            /// <summary>
-            /// 是否接受开发版更新
-            /// 默认值：false
-            /// </summary>
-            public bool _DevelopmentVersion
-            {
-                get
-                {
-                    return bool.Parse(DevelopmentVersion);
-                }
-                set
-                {
-                    if (value.ToString() != DevelopmentVersion)
-                    {
-                        DevelopmentVersion = value.ToString();
                         OnPropertyChanged();
                         ModifyConfig(value);
                     }

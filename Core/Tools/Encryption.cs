@@ -1,5 +1,4 @@
-﻿using Amazon.Auth.AccessControlPolicy;
-using Masuit.Tools;
+﻿using Masuit.Tools;
 using SixLabors.ImageSharp.Drawing;
 using System;
 using System.Collections.Generic;

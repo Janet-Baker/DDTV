@@ -41,8 +41,6 @@ public partial class DefaultPage
         UpdateHardwareResourceUtilizationRateTimer = new Timer(UpdateHardwareResourceUtilizationRate, null, 1000, 60 * 1000);
         //更新运行时长
         UpdateRuntimeStatisticsTimer = new Timer(UpdateRuntimeStatistics, null, 1000, 1000);
-        //更新公告
-        UpdateAnnouncementTimer = new Timer(UpdateAnnouncement, null, 1, 1000 * 60 * 60);
         //代理状态检测
         ProxyDetectionTimer = new Timer(ProxyDetection, null, 1, 1000 * 60 * 30);
         //IP版本检测
@@ -96,25 +94,6 @@ public partial class DefaultPage
         PageComboBoxItems.OnPropertyChanged("ProxyUrl");
     }
 
-    /// <summary>
-    /// 更新公告
-    /// </summary>
-    /// <param name="state"></param>
-    public static void UpdateAnnouncement(object state)
-    {
-
-        try
-        {
-            string announcement = Core.Tools.ProgramUpdates.Get("/announcement.txt");
-            PageComboBoxItems.announcement = announcement;
-            PageComboBoxItems.OnPropertyChanged("announcement");
-        }
-        catch (Exception ex)
-        {
-            Log.Warn(nameof(UpdateAnnouncement), "更新公告出现错误，错误堆栈已写文本记录文件", ex, false);
-        }
-    }
-    
     /// <summary>
     /// 检测代理状态
     /// </summary>

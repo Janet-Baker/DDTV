@@ -208,9 +208,6 @@ namespace Server
                             Detect detect = new();
                             //控制台打印心跳日志
                             doki();
-                            //终端和ws更新事件
-                            Core.Tools.ProgramUpdates.NewVersionAvailableEvent += ProgramUpdates_NewVersionAvailableEvent;
-
 
                             if (Init.Mode!= Config.Mode.Desktop && Config.Core_RunConfig._DesktopRemoteServer)
                             {
@@ -255,11 +252,6 @@ namespace Server
 
 
                     });
-                }
-
-                private void ProgramUpdates_NewVersionAvailableEvent(object? sender, EventArgs e)
-                {
-                    OperationQueue.Add(Opcode.Config.UpdateDetect, $"检测到DDTV新版本：【{sender}】");
                 }
 
                 public override Task StopAsync(CancellationToken stoppingToken)

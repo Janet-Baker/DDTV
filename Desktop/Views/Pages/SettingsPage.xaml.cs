@@ -253,11 +253,6 @@ public partial class SettingsPage
         //API_Url配置保存
         Config.Core_RunConfig._MainDomainName = MainDomainName_TextBox.Text;
         Config.Core_RunConfig._LiveDomainName = LiveDomainName_TextBox.Text;
-        //开发版更新配置
-        if (Config.Core_RunConfig._DevelopmentVersion != DevelopmentVersion_ToggleSwitch.IsChecked)
-        {
-            Config.Core_RunConfig._DevelopmentVersion = (bool)DevelopmentVersion_ToggleSwitch.IsChecked;
-        }
         //WebHook配置保存
         if (Config.Core_RunConfig._WebHookSwitch != WebHook_SwitchControl.IsChecked)
         {
@@ -369,36 +364,6 @@ public partial class SettingsPage
 
     #endregion
 
-
-
-    private async void CheckForUpdates_Click(object sender, RoutedEventArgs e)
-    {
-        MainWindow.SnackbarService.Show("检查更新", "正在检测更新，请稍候...", ControlAppearance.Info, new SymbolIcon(SymbolRegular.ArrowSync20), TimeSpan.FromSeconds(5));
-        if (await Core.Tools.ProgramUpdates.CheckForNewVersions(false, true))
-        {
-            var cd = new ContentDialog
-            {
-                Title = "检测到更新，是否更新？",
-                Content = "确认更新将会关闭DDTV，然后进行更新。",
-                PrimaryButtonText = "确认更新",
-                CloseButtonText = "取消",
-                DefaultButton = ContentDialogButton.Close
-            };
-            var cancellationToken = new CancellationToken();
-            var result = await MainWindow._contentDialogService.ShowAsync(cd, cancellationToken);
-            if (result != ContentDialogResult.Primary)
-            {
-                return;
-            }
-            Core.Tools.ProgramUpdates.CallUpUpdateProgram();
-        }
-        else
-        {
-            MainWindow.SnackbarService.Show("检查更新", "当前已是最新版本", ControlAppearance.Success, new SymbolIcon(SymbolRegular.ArrowSync20), TimeSpan.FromSeconds(3));
-        }
-
-
-    }
 
     private void SelectRecordingFolder_Click(object sender, RoutedEventArgs e)
     {

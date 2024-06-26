@@ -32,7 +32,6 @@
                 
                 
                 
-                <ui:Button Grid.Column="2" Margin="0,0,0,10" Content="检查更新" FontSize="20" HorizontalAlignment="Right" Icon="{ui:SymbolIcon DocumentHeaderArrowDown20}" Click="CheckForUpdates_Click"/>
             </Grid>
 
             <Grid>
@@ -121,18 +120,6 @@
                                         <ComboBoxItem Content="缩小到任务栏"/>
                                         <ComboBoxItem Content="缩小到后台托盘" />
                                     </ComboBox>
-                                </Grid>
-                            </Grid>
-                        </ui:CardControl>
-
-                        <ui:CardControl Padding="20,10,20,10" Header="接收开发版更新　（新功能功能优先推送）" Icon="{ui:SymbolIcon DeveloperBoardLightningToolbox20}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="1" VerticalAlignment="Center"  HorizontalAlignment="Right">
-                                    <ui:ToggleSwitch Name="DevelopmentVersion_ToggleSwitch" Height="35" IsChecked="{Binding _DevelopmentVersion, Mode=OneWay}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0,0,16,0" OffContent="关" OnContent="开" />
                                 </Grid>
                             </Grid>
                         </ui:CardControl>

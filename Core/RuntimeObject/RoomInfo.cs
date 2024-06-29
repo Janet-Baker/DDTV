@@ -1219,7 +1219,6 @@ namespace Core.RuntimeObject
         /// 直播间分区id
         /// </summary>
         public ExpansionType<int> area = new() { ExpirationTime = DateTime.UnixEpoch, Value = -1 };
-        [JsonIgnore]
         /// <summary>
         /// 直播间分区名
         /// </summary>
@@ -1229,12 +1228,10 @@ namespace Core.RuntimeObject
         /// 直播间新版分区id
         /// </summary>
         public ExpansionType<int> area_v2_id = new() { ExpirationTime = DateTime.UnixEpoch, Value = -1 };
-        [JsonIgnore]
         /// <summary>
         /// 直播间新版分区名
         /// </summary>
         public ExpansionType<string> area_v2_name = new() { ExpirationTime = DateTime.UnixEpoch, Value = string.Empty };
-        [JsonIgnore]
         /// <summary>
         /// 直播间父分区名
         /// </summary>
@@ -1244,7 +1241,6 @@ namespace Core.RuntimeObject
         /// 直播间父分区id
         /// </summary>
         public ExpansionType<int> area_v2_parent_id = new() { ExpirationTime = DateTime.UnixEpoch, Value = -1 };
-        [JsonIgnore]
         /// <summary>
         /// 主播头像url
         /// </summary>
@@ -1267,7 +1263,6 @@ namespace Core.RuntimeObject
         /// 直播关键帧图
         /// </summary>
         public ExpansionType<string> keyframe = new() { ExpirationTime = DateTime.UnixEpoch, Value = string.Empty };
-        [JsonIgnore]
         /// <summary>
         /// 直播间锁定时间戳
         /// </summary>
@@ -1292,7 +1287,6 @@ namespace Core.RuntimeObject
         /// 是否隐藏
         /// </summary>
         public ExpansionType<bool> is_hidden = new() { ExpirationTime = DateTime.UnixEpoch, Value = false };
-        [JsonIgnore]
         /// <summary>
         /// 是否锁定
         /// </summary>

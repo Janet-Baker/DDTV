@@ -446,7 +446,7 @@ namespace Core.RuntimeObject
             /// <summary>
             /// 花费：单位金瓜子
             /// </summary>
-            public float Price { set; get; }
+            public double Price { set; get; }
             /// <summary>
             /// 礼物名称
             /// </summary>

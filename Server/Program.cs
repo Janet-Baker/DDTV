@@ -319,17 +319,17 @@ namespace Server
                 while (true)
                 {
                     var doki = Core.Tools.DokiDoki.GetDoki();
-                    Log.Info("DokiDoki", $"总:{doki.Total}|录制中:{doki.Downloading}|使用内存:{doki.UsingMemoryStr}|{doki.InitType}|{doki.Ver}|{Enum.GetName(typeof(Config.Mode), doki.StartMode)}【{doki.CompilationMode}】(编译时间:{doki.CompiledVersion})");
+                    Log.Info("DokiDoki", $"总:{doki.Total}|录制中:{doki.Downloading}|使用内存:{doki.UsingMemoryStr}|{doki.InitType}|{doki.Ver}");
                     if (doki.UsingMemory > 4294967296)
                     {
                         Log.Error("DokiDoki", $"检测到内存泄漏严重，3秒后自动停止运行");
                         Thread.Sleep(3000);
-                        Environment.Exit(-114514);
+                        Environment.Exit(0x3623);
                     }
 #if DEBUG
                     Thread.Sleep(60 * 1000);
 #else
-                    Thread.Sleep(300 * 1000);
+                    Thread.Sleep(3600 * 1000);
 #endif
                 }
             });

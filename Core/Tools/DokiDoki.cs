@@ -13,8 +13,7 @@ namespace Core.Tools
     {
         public static DokiClass GetDoki()
         {
-            Process currentProcess = null;
-            currentProcess = Process.GetCurrentProcess();
+            Process currentProcess = Process.GetCurrentProcess();
             long totalBytesOfMemoryUsed = currentProcess.WorkingSet64;
             (int Total, int Download) = Core.RuntimeObject.RoomInfo.GetTasksInDownloadCount();
             DokiClass dokiClass = new DokiClass()

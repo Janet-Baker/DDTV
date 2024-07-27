@@ -81,6 +81,4 @@
         </Grid>
         <ContentPresenter x:Name="RootContentDialogPresenter" />
     </Grid>
-   
-    
 </ui:FluentWindow>

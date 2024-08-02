@@ -15,6 +15,7 @@
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <NoWarn>1701;1702</NoWarn>
+    <PublishReadyToRun>true</PublishReadyToRun>
     <DebugType>none</DebugType>
   </PropertyGroup>
 

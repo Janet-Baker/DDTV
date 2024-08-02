@@ -19,6 +19,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">
 		<DebugType>none</DebugType>
+		<PublishReadyToRun>true</PublishReadyToRun>
 		<DocumentationFile />
 	</PropertyGroup>
 

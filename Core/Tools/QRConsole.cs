@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
+﻿using SixLabors.ImageSharp.PixelFormats;
 using ZXing;
 using ZXing.QrCode;
 

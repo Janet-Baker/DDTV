@@ -1,17 +1,5 @@
-﻿using AngleSharp.Dom.Events;
-using Core.LiveChat;
-using Core.LogModule;
-using Core.Network.Methods;
+﻿using Core.LogModule;
 using Core.RuntimeObject.Download;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using static Core.RuntimeObject.Download.HLS;
 using static Core.RuntimeObject.RoomInfo;
 
 namespace Core.RuntimeObject

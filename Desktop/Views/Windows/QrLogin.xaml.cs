@@ -1,13 +1,10 @@
 ﻿using Core;
 using Core.LogModule;
 using Net.Codecrete.QrCodeGenerator;
-using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Wpf.Ui.Controls;
-using static Core.Tools.SystemResource.Overview;
-using static System.Windows.Forms.AxHost;
 
 namespace Desktop.Views.Windows
 {

@@ -1,17 +1,8 @@
-﻿using AngleSharp.Io;
-using ConsoleTableExt;
+﻿using ConsoleTableExt;
 using Core.LiveChat;
 using Core.LogModule;
-using Core.Network.Methods;
-using SQLitePCL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Core.Network.Methods.Room;
 using static Core.RuntimeObject.Detect;
-using static Core.RuntimeObject.Download.Basics;
 
 namespace Core.RuntimeObject.Download
 {

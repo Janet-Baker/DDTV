@@ -1,14 +1,8 @@
-﻿using AngleSharp.Io.Dom;
-using Core.LogModule;
+﻿using Core.LogModule;
 using Core.RuntimeObject;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Formats.Tar;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Tools
 {

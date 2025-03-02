@@ -1,18 +1,8 @@
 ﻿using Server.WebAppServices.Middleware;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mime;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using static Server.WebAppServices.Middleware.InterfaceAuthentication;
-using static Core.Tools.SystemResource;
-using static Core.Tools.SystemResource.GetHDDInfo;
-using static Core.Tools.SystemResource.GetMemInfo;
-using System.Net;
 using static Core.Tools.SystemResource.Overview;
 
 namespace Server.WebAppServices.Api

@@ -5,8 +5,6 @@
 
 using Core;
 using Desktop.Views.Windows;
-using Masuit.Tools;
-using SharpCompress.Common;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;

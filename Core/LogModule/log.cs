@@ -1,17 +1,5 @@
 ﻿using Core.Tools.ColorConsole;
-using Masuit.Tools.Logging;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Formats.Asn1;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Core.LogModule.LogClass;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Core.LogModule
 {
@@ -53,14 +41,9 @@ namespace Core.LogModule
             LogLevel = log;
             Tools.Time.Config.Init();
             LogDB.Config.SQLiteInit(false);
-             Log.LogAddEvent += Log_LogAddEvent;
-#if DEBUG
-            Info(nameof(Log), $"{Init.InitType}|{Init.Ver}【Dev】(编译时间:{Init.CompiledVersion})");
-            Info(nameof(Log), "Log系统初始化完成（Dev模式）");
-#else
+            Log.LogAddEvent += Log_LogAddEvent;
             Info(nameof(Log),  $"{Init.InitType}|{Init.Ver} (编译时间:{Init.CompiledVersion})");
             Info(nameof(Log),  "Log系统初始化完成");
-#endif
         }
         /// <summary>
         /// 调试信息
@@ -179,11 +162,7 @@ namespace Core.LogModule
                             });
 
                         }
-#if DEBUG
-                        if (true)
-#else
                         if (logClass.Type <= LogLevel && logClass.Type != LogClass.LogType.Info_Transcod && logClass.IsDisplay && ( Config.Core_RunConfig._DebugMode || logClass.Type< LogType.Debug))
-#endif
                         {
                             LogList.Add(logClass);
                             string _ = $"{logClass.Time}:[{Enum.GetName(typeof(LogClass.LogType), (int)logClass.Type)}][{logClass.Source}]{logClass.Message}";

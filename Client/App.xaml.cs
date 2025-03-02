@@ -2,8 +2,6 @@
 using Core.LogModule;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using System.Configuration;
-using System.Data;
 using System.Windows;
 using static Server.Program;
 

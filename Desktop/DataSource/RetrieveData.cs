@@ -5,11 +5,6 @@ using Desktop.Models;
 using Desktop.Views.Pages;
 using System.Windows;
 using System.Windows.Media;
-using static System.Windows.Forms.AxHost;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
-
-
 
 
 namespace Desktop.DataSource

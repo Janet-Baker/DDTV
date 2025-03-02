@@ -1,14 +1,8 @@
 ﻿using Core.LogModule;
 using Downloader;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using static Core.RuntimeObject.Download.Basics;
-using static FastExpressionCompiler.ImTools.FHashMap;
 
 namespace Core.RuntimeObject.Download
 {

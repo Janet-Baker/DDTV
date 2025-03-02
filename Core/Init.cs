@@ -1,16 +1,7 @@
 ﻿using Core.LogModule;
-using SixLabors.ImageSharp.Drawing;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Formats.Tar;
-using System.Linq;
 using System.Net;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 using static Core.Config;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Core
 {

@@ -1,15 +1,6 @@
-﻿using AngleSharp.Dom;
-using AngleSharp.Io;
-using Core.LogModule;
-using Microsoft.AspNetCore.Components.RenderTree;
-using SharpCompress.IO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Core.LogModule;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
-using static FastExpressionCompiler.ImTools.FHashMap;
 
 namespace Core.Network
 {

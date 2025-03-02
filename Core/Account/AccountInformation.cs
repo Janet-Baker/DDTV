@@ -1,6 +1,4 @@
-﻿using Core.Network;
-using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Net;
 
 namespace Core.Account

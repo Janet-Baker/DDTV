@@ -10,12 +10,8 @@ using Microsoft.Extensions.Logging;
 using Core;
 using Microsoft.AspNetCore.Http.Features;
 using System.Runtime.InteropServices;
-using Microsoft.AspNetCore.WebSockets;
 using Server.WebAppServices.Middleware;
-using Server.WebAppServices;
-using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using static Server.WebAppServices.MessageCode;
 using System.Net.NetworkInformation;
 using System.Net;
 

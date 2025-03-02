@@ -1,17 +1,5 @@
 ﻿using Core.Tools.ColorConsole;
-using Masuit.Tools.Logging;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Formats.Asn1;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Core.LogModule.LogClass;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Core.LogModule
 {

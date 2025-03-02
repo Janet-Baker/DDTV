@@ -2,15 +2,9 @@
 using Core.Network;
 using SkiaSharp;
 using SkiaSharp.QrCode;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Net;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using System.Threading;
 using Color = System.Drawing.Color;
 
 

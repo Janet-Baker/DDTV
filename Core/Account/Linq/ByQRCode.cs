@@ -1,7 +1,4 @@
-﻿using SkiaSharp;
-using System;
-using System.Drawing;
-using System.IO;
+﻿using System.Drawing;
 using System.Text.RegularExpressions;
 using static Core.Account.Kernel.ByQRCode;
 

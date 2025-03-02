@@ -1,15 +1,11 @@
 ﻿using Core;
 using Core.LogModule;
 using Core.RuntimeObject;
-using Desktop.Models;
-using Desktop.Views.Windows;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Wpf.Ui.Controls;
-using static System.Windows.Forms.AxHost;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Desktop.Views.Control
 {

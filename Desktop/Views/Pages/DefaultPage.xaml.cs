@@ -6,12 +6,9 @@
 using Core;
 using Core.LogModule;
 using Desktop.Models;
-using System;
 using System.Net;
 using System.Net.Sockets;
 using static Core.Tools.SystemResource.Overview;
-using static Server.WebAppServices.Api.get_system_resources;
-using static System.Windows.Forms.AxHost;
 
 namespace Desktop.Views.Pages;
 

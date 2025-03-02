@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Core.LiveChat
+﻿namespace Core.LiveChat
 {
     internal static class Extensions
     {

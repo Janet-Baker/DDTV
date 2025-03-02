@@ -4,23 +4,13 @@
 // All Rights Reserved.
 
 using Core;
-using Desktop.Models;
 using Desktop.Views.Windows;
-using Masuit.Tools;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Media;
-using System.Windows.Navigation;
-using Wpf.Ui;
-using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Extensions;
 using static Core.RuntimeObject.Download.Basics;
 
 namespace Desktop.Views.Pages;

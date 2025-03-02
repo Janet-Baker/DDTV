@@ -1,25 +1,17 @@
-﻿using AngleSharp.Dom;
-using Core.LogModule;
+﻿using Core.LogModule;
 using Core.Network;
-using Core.Network.Methods;
 using Core.RuntimeObject;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Text.Unicode;
-using System.Threading.Tasks;
-using static Core.Network.Methods.Room;
 
 namespace Core.LiveChat
 {

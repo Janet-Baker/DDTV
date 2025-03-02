@@ -1,21 +1,17 @@
 ﻿using Core;
 using Core.LogModule;
 using Core.RuntimeObject;
-using Desktop.Models;
 using Desktop.Views.Pages;
 using Desktop.Views.Windows;
-using LibVLCSharp.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Notification.Wpf;
 using System.Diagnostics;
-using System.IO;
 using System.Reflection;
 using System.Windows;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using static Core.RuntimeObject.Detect;
 using static Core.Tools.DokiDoki;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Desktop
 {

@@ -1,14 +1,9 @@
 ﻿using Core.LogModule;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
-using static Core.LogModule.Opcode;
 using static Core.Network.Methods.Nav;
 
 namespace Core.Network.Methods

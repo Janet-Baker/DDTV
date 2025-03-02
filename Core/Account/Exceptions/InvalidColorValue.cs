@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Core.Account.Exceptions
+﻿namespace Core.Account.Exceptions
 {
     /// <summary>
     /// 传入了错误的颜色值

@@ -5,8 +5,6 @@ using Core.RuntimeObject;
 using Desktop.Models;
 using Desktop.Views.Windows.DanMuCanvas.BarrageParameters;
 using LibVLCSharp.Shared;
-using LibVLCSharp.WPF;
-using Microsoft.Extensions.DependencyInjection;
 using Notification.Wpf;
 using System.Diagnostics;
 using System.Windows;

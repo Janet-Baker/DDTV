@@ -1,23 +1,11 @@
 ﻿using Server.WebAppServices.Middleware;
-using Core.LogModule;
-using Core.Network.Methods;
 using Core.RuntimeObject;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mime;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using static Server.WebAppServices.MessageCode;
 using static Server.WebAppServices.Middleware.InterfaceAuthentication;
-using static Core.LogModule.Opcode;
 using static Core.RuntimeObject.RoomCardClass;
-using System.Drawing;
 
 namespace Server.WebAppServices.Api
 {

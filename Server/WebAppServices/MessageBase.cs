@@ -1,11 +1,7 @@
-﻿using AngleSharp.Dom;
-using Core.LogModule;
+﻿using Core.LogModule;
 using Newtonsoft.Json;
 using System.Net.WebSockets;
 using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
 using static Server.WebAppServices.MessageCode;
 
 namespace Server.WebAppServices
